@@ -1,0 +1,48 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: weatherforecast-steeltoe
+  annotations:
+    ootb.apps.tanzu.vmware.com/servicebinding-workload: "true"
+    ootb.apps.tanzu.vmware.com/apidescriptor-ref: "true"
+  labels:
+    app.kubernetes.io/part-of: weatherforecast-steeltoe
+    apps.tanzu.vmware.com/workload-type: web
+    tanzu.app.live.view: "true"
+    tanzu.app.live.view.application.flavours: steeltoe
+    tanzu.app.live.view.application.name: weatherforecast-steeltoe
+    app.kubernetes.io/component: run
+    carto.run/workload-name: weatherforecast-steeltoe
+spec:
+  template:
+    metadata:
+      annotations:
+        apps.tanzu.vmware.com/debug: "true"
+        apps.tanzu.vmware.com/live-update: "true"
+        autoscaling.knative.dev/minScale: "1"
+        conventions.carto.run/applied-conventions: |-
+          developer-conventions/add-source-image-label
+          spring-boot-convention/auto-configure-actuators-check
+          spring-boot-convention/app-live-view-appflavour-check
+          appliveview-sample/app-live-view-appflavour-check
+          appliveview-sample/app-live-view-connector-steeltoe
+          appliveview-sample/app-live-view-appflavours-steeltoe
+        developer.apps.tanzu.vmware.com/image-source-digest: harbor.shared.12factor.xyz/vparmar/supply-chain/tanzu-java-web-app-source:latest@sha256:3d05f7f56ae25f80aba224a7699959bd7fb23e2dbc6c9c8b32a3c881cc92f519
+        developer.conventions/target-containers: workload
+      labels:
+        app.kubernetes.io/component: run
+        app.kubernetes.io/part-of: weatherforecast-steeltoe
+        apps.tanzu.vmware.com/workload-type: web
+        carto.run/workload-name: weatherforecast-steeltoe
+        tanzu.app.live.view: "true"
+        tanzu.app.live.view.application.flavours: steeltoe
+        tanzu.app.live.view.application.name: weatherforecast-steeltoe
+    spec:
+      containers:
+      - image: harbor.shared.12factor.xyz/vparmar/supply-chain/weatherforecast-steeltoe-dev-ns@sha256:2b23b9f3b8d4225b9826611ddfc1ddbb427c7eb17f544cbba3299014a3423346
+        name: workload
+        resources: {}
+        securityContext:
+          runAsUser: 1000
+      serviceAccountName: default
+

@@ -19,6 +19,7 @@ spec:
         apps.tanzu.vmware.com/debug: "true"
         apps.tanzu.vmware.com/live-update: "true"
         autoscaling.knative.dev/maxScale: "1"
+        autoscaling.knative.dev/min-scale: "1"
         autoscaling.knative.dev/minScale: "1"
         boot.spring.io/actuator: http://:8081/actuator
         boot.spring.io/version: 2.7.8
@@ -36,7 +37,7 @@ spec:
           spring-boot-convention/app-live-view-connector-boot
           spring-boot-convention/app-live-view-appflavours-boot
           appliveview-sample/app-live-view-appflavour-check
-        developer.apps.tanzu.vmware.com/image-source-digest: harbor.shared.12factor.xyz/vparmar/supply-chain/tanzu-java-web-app-source:latest@sha256:f8730a9d35e62a9bd17a68118efca3d16ab79a8514ae4774ae56fdf4e883f2f6
+        developer.apps.tanzu.vmware.com/image-source-digest: harbor.shared.12factor.xyz/vparmar/supply-chain/tanzu-java-web-app-source:latest@sha256:d6851b7db3488b813cdb793132434e24f8d82c3d864021d42a4b2b13a860f7f5
         developer.conventions/target-containers: workload
       labels:
         app.kubernetes.io/component: run
@@ -60,7 +61,7 @@ spec:
           value: "9005"
         - name: JAVA_TOOL_OPTIONS
           value: -Dmanagement.endpoint.health.probes.add-additional-paths="true" -Dmanagement.endpoint.health.show-details="always" -Dmanagement.endpoints.web.base-path="/actuator" -Dmanagement.endpoints.web.exposure.include="*" -Dmanagement.health.probes.enabled="true" -Dmanagement.server.port="8081" -Dserver.port="8080" -Dserver.shutdown.grace-period="24s"
-        image: harbor.shared.12factor.xyz/vparmar/supply-chain/tanzu-java-web-app-iterate-dev-ns@sha256:35e3d381a500331d381edd8402e7b2e2569a3316d0e2cbe2f644dd5c935436fb
+        image: harbor.shared.12factor.xyz/vparmar/supply-chain/tanzu-java-web-app-iterate-dev-ns@sha256:392238486a26cf8a79f8d428353fcbafc96eccf8bb312f0158ce489fcdb90961
         livenessProbe:
           httpGet:
             path: /livez

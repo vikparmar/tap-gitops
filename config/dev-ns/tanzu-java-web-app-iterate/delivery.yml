@@ -5,6 +5,7 @@ metadata:
   annotations:
     ootb.apps.tanzu.vmware.com/servicebinding-workload: "true"
     ootb.apps.tanzu.vmware.com/apidescriptor-ref: "true"
+    kapp.k14s.io/change-rule: upsert after upserting servicebinding.io/ServiceBindings
   labels:
     app.kubernetes.io/part-of: tanzu-java-web-app
     apps.tanzu.vmware.com/auto-configure-actuators: "true"
@@ -24,6 +25,7 @@ spec:
         boot.spring.io/actuator: http://:8081/actuator
         boot.spring.io/version: 2.7.8
         conventions.carto.run/applied-conventions: |-
+          appliveview-sample/app-live-view-appflavour-check
           developer-conventions/debug-convention
           developer-conventions/live-update-convention
           developer-conventions/add-source-image-label
@@ -36,8 +38,7 @@ spec:
           spring-boot-convention/app-live-view-appflavour-check
           spring-boot-convention/app-live-view-connector-boot
           spring-boot-convention/app-live-view-appflavours-boot
-          appliveview-sample/app-live-view-appflavour-check
-        developer.apps.tanzu.vmware.com/image-source-digest: harbor.shared.12factor.xyz/vparmar/supply-chain/tanzu-java-web-app-source:latest@sha256:8d2a6546e6b96b6084a464ed60f0cfb0c1769f003769f937b5eb170d2dad92c4
+        developer.apps.tanzu.vmware.com/image-source-digest: harbor.shared.12factor.xyz/vparmar/supply-chain/tanzu-java-web-app-source:latest@sha256:7079cf72d3230173567f1cd3ec21ff13a804b2103dbd89b286fa6384f4f2f4fa
         developer.conventions/target-containers: workload
       labels:
         app.kubernetes.io/component: run
@@ -61,7 +62,7 @@ spec:
           value: "9005"
         - name: JAVA_TOOL_OPTIONS
           value: -Dmanagement.endpoint.health.probes.add-additional-paths="true" -Dmanagement.endpoint.health.show-details="always" -Dmanagement.endpoints.web.base-path="/actuator" -Dmanagement.endpoints.web.exposure.include="*" -Dmanagement.health.probes.enabled="true" -Dmanagement.server.port="8081" -Dserver.port="8080" -Dserver.shutdown.grace-period="24s"
-        image: harbor.shared.12factor.xyz/vparmar/supply-chain/tanzu-java-web-app-iterate-dev-ns@sha256:9275ae018dd999b696f80d4c877844f92f09a8afe8b80e64bd8281911b27f362
+        image: europe-west2-docker.pkg.dev/vparmar-playground/tap/supply-chain/workloads/tanzu-java-web-app-iterate-dev-ns@sha256:09b2ea648ae9dee76a742e0e976c117c653b677d694ad105ca634d61a082da6a
         livenessProbe:
           httpGet:
             path: /livez
